@@ -12,13 +12,14 @@ import 'package:wheel_app/withdraw.dart';
 import 'package:wheel_app/invite.dart';
 import 'package:share/share.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Homepage> createState() => _HomepageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomepageState extends State<Homepage> {
   StreamController<int> controller = StreamController<int>();
 
   List<FortuneItem> items = [
@@ -39,9 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        centerTitle: true,
+        // centerTitle: true,
         backgroundColor: Colors.transparent,
-        elevation: 0.0
+        elevation: 0.0,
+        title: Container(
+          color: Colors.white,
+          height: 40,
+          width: 40,
+          alignment: Alignment.center,
+          child: Text('0'),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -51,8 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
         )),
         child: Column(
           children: [
+            // Padding(padding: EdgeInsets.all(30) , child:
+            //   Text('Hi'),),
+
+
             const SizedBox(
-              height: 300,
+              height: 150,
+            ),
+            Container(
+              color: Colors.white,
+              height: 80,
+              width: 240,
+              alignment: Alignment.center,
+              child: Text('0' ' UC'),
             ),
             Center(
               child: Padding(
@@ -64,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: FortuneWheel(
                       duration: const Duration(seconds: 3),
                       selected: controller.stream,
-                      curve: Curves.bounceIn,
-                      animateFirst: true,
+                      // curve: Curves.bounceIn,
+                      animateFirst: false,
                       items: items,
                       onAnimationStart: () {
                         print("On Start");
@@ -74,11 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         print("On Animation End");
                       },
                       onFling: () {
-                        print("On flying");
-                        controller.add(Random().nextInt(items.length));
+
                       },
                       onFocusItemChanged: (e) {
-                        print(e);
+
                       },
                     ),
                   ),
@@ -89,18 +107,22 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.transparent,
             ),
             MaterialButton(
-              minWidth: 1,
+              minWidth: 200,
               height: 60,
               onPressed: () {
-                controller.add(Random().nextInt(items.length));
+                if(true){
+                  controller.add([1][new Random().nextInt([1].length)]);
+                }else{
+                  controller.add(Random().nextInt(items.length));
+                }
               },
               color: const Color.fromARGB(166, 255, 235, 59),
               elevation: 0,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
+                  borderRadius: BorderRadius.circular(25)),
               child: const Text(
                 "تدوير",
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
               ),
             ),
           ],
