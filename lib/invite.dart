@@ -18,7 +18,7 @@ class _InviteState extends State<Invite> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/wood2.jpg'),
             fit: BoxFit.cover,
@@ -28,8 +28,8 @@ class _InviteState extends State<Invite> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'قم بدعوة اصدقائك واربح',
                 style: TextStyle(
                   fontSize: 24,
@@ -37,26 +37,26 @@ class _InviteState extends State<Invite> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       ': كود الدعوة الخاص بك',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     SelectableText(
                       text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -65,17 +65,17 @@ class _InviteState extends State<Invite> {
                   ],
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.all(18.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    child: Text(
+                    child: const Text(
                       '0',
                       style: TextStyle(
                         fontSize: 18,
@@ -83,7 +83,7 @@ class _InviteState extends State<Invite> {
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     ': الاشخاص المدعوون',
                     textAlign: TextAlign.right,
                     style: TextStyle(
@@ -95,7 +95,7 @@ class _InviteState extends State<Invite> {
               ),
               Expanded(
                 child: ListView(
-                  children: [
+                  children: const [
                     InviteOption(
                       label: 'كيف سأربح',
                       icon: Icons.mail,
@@ -112,18 +112,18 @@ class _InviteState extends State<Invite> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFE89F02),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  textStyle: TextStyle(
+                  backgroundColor: const Color(0xFFE89F02),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  textStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'قم بالدعوة الآن',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -141,13 +141,13 @@ class InviteOption extends StatelessWidget {
   final IconData icon;
   final String description;
 
-  InviteOption(
-      {required this.label, required this.icon, required this.description});
+  const InviteOption(
+      {super.key, required this.label, required this.icon, required this.description});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8.0),
@@ -155,21 +155,21 @@ class InviteOption extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: Icon(icon, color: Color(0xFFE89F02)),
+            leading: Icon(icon, color: const Color(0xFFE89F02)),
             title: Text(
               label,
               textAlign: TextAlign.right,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 color: Colors.black,
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             textAlign: TextAlign.right,
             description,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.black,
             ),

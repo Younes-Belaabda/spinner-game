@@ -35,8 +35,8 @@ class _GainQuotiState extends State<GainQuoti> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(
+        title: const Padding(
+          padding: EdgeInsets.only(
             right: 0,
             left: 80,
           ),

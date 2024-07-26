@@ -15,8 +15,8 @@ class _WithdrawState extends State<Withdraw> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 110),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 110),
           child: Text(
             'سحب',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
