@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter/services.dart';
@@ -12,9 +13,7 @@ import 'package:wheel_app/invite.dart';
 import 'package:share/share.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
+  const MyHomePage({super.key});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -42,8 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        title: Text(widget.title),
+        elevation: 0.0
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -216,8 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text('تسجيل الخروج'),
-                onTap: () {
-                  SystemNavigator.pop();
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacementNamed('login');
                 }),
           ],
         ),

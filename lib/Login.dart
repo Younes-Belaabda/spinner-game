@@ -1,9 +1,18 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wheel_app/Signup_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPage();
+}
+
+class _LoginPage extends State<LoginPage> {
+  final email = TextEditingController();
+  final pwd   = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +22,6 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
-          ),
-        ),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -61,10 +60,11 @@ class LoginPage extends StatelessWidget {
                       children: <Widget>[
                         FadeInUp(
                             duration: const Duration(milliseconds: 1200),
-                            child: makeInput(label: "Email")),
+                            child: makeInput(controller: email , label: "Email")),
                         FadeInUp(
                             duration: const Duration(milliseconds: 1300),
                             child: makeInput(
+                                controller: pwd,
                                 label: "Password", obscureText: true)),
                       ],
                     ),
@@ -87,7 +87,48 @@ class LoginPage extends StatelessWidget {
                           child: MaterialButton(
                             minWidth: double.infinity,
                             height: 60,
-                            onPressed: () {},
+                            onPressed: () async {
+                              try {
+                                final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                    email: email.text,
+                                    password: pwd.text
+                                );
+                                Navigator.of(context).pushReplacementNamed('homepage');
+                              } on FirebaseAuthException catch (e) {
+                                var msg = '';
+                                switch(e.code){
+                                  case 'invalid-email':
+                                    msg = 'خطأ في البريد الإلكتروني';
+                                    break;
+                                  case 'user-not-found':
+                                    msg = 'المستخدم غير موجود';
+                                    break;
+                                  case 'wrong-password':
+                                    msg = 'كلمة المرور خاطئة';
+                                    break;
+                                  case 'invalid-credential':
+                                    msg = 'خطأ في المعلومات';
+                                    break;
+                                  default:
+                                    msg = 'خطأ في المعلومات';
+                                }
+                                print(e.code);
+                                showDialog(context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("خطأ في المعلومات",),
+                                        content: Text(msg),
+                                        //buttons?
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("غلق"),
+                                            onPressed: () { Navigator.of(context).pop(); },
+                                          )
+                                        ],
+                                      );
+                                    });
+                              }
+                            },
                             color: Colors.greenAccent,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -111,7 +152,8 @@ class LoginPage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const SignupPage()));
+                                      builder: (context) =>
+                                      const SignupPage()));
                             },
                             child: const Text(
                               "Sign up",
@@ -139,7 +181,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget makeInput({label, obscureText = false}) {
+  Widget makeInput({controller , label, obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -152,9 +194,11 @@ class LoginPage extends StatelessWidget {
           height: 5,
         ),
         TextField(
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            contentPadding:
+            const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey.shade400)),
             border: OutlineInputBorder(

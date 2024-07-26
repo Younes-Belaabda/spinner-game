@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "7441741820",
+    "project_id": "spinnergame-90440",
+    "storage_bucket": "spinnergame-90440.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7441741820:android:2e6b6d27926148d7a7e479",
+        "android_client_info": {
+          "package_name": "com.example.spinnergame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7441741820-aamjcc2sijsleefj5djdrlfums2ipgg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQIppbx_s0yHBjA1Ums7zPkxLfcnfmD6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7441741820-aamjcc2sijsleefj5djdrlfums2ipgg6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "7441741820-u3c67hg1gu2rql62ut7ra6314jh8npfc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.spinnergame.spinnergame"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7441741820:android:5d936e2109e375cfa7e479",
+        "android_client_info": {
+          "package_name": "com.example.wheel_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7441741820-aamjcc2sijsleefj5djdrlfums2ipgg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQIppbx_s0yHBjA1Ums7zPkxLfcnfmD6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7441741820-aamjcc2sijsleefj5djdrlfums2ipgg6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "7441741820-u3c67hg1gu2rql62ut7ra6314jh8npfc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.spinnergame.spinnergame"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

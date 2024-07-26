@@ -1,9 +1,29 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:wheel_app/Login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
+  @override
+  State<SignupPage> createState() => _SignupPage();
+}
+
+class _SignupPage extends State<SignupPage> {
+  final email = TextEditingController();
+  final pwd   = TextEditingController();
+  final repwd = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    email.dispose();
+    pwd.dispose();
+    repwd.dispose();
+
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +76,15 @@ class SignupPage extends StatelessWidget {
                 children: <Widget>[
                   FadeInUp(
                       duration: const Duration(milliseconds: 1200),
-                      child: makeInput(label: "Email")),
+                      child: makeInput(controller: email , label: "Email")),
                   FadeInUp(
                       duration: const Duration(milliseconds: 1300),
-                      child: makeInput(label: "Password", obscureText: true)),
-                  FadeInUp(
-                      duration: const Duration(milliseconds: 1400),
-                      child: makeInput(
-                          label: "Confirm Password", obscureText: true)),
+                      child: makeInput(controller: pwd , label: "Password", obscureText: true)),
+                  // FadeInUp(
+                  //     duration: const Duration(milliseconds: 1400),
+                  //     child: makeInput(
+                  //         controller: repwd,
+                  //         label: "Confirm Password", obscureText: true)),
                 ],
               ),
               FadeInUp(
@@ -81,7 +102,42 @@ class SignupPage extends StatelessWidget {
                     child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: email.text,
+                            password: pwd.text,
+                          );
+                          Navigator.of(context).pushReplacementNamed('homepage');
+                        } on FirebaseAuthException catch (e) {
+                          var msg = '';
+                          switch(e.code){
+                            case 'weak-password':
+                              msg = 'كلمة المرور ضعيفة';
+                              break;
+                            case 'email-already-in-use':
+                              msg = 'البريد مستخدم من قبل';
+                              break;
+                            default:
+                              msg = 'خطأ في المعلومات';
+                          }
+                          print(e.code);
+                          showDialog(context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("خطأ في المعلومات",),
+                                  content: Text(msg),
+                                  //buttons?
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text("غلق"),
+                                      onPressed: () { Navigator.of(context).pop(); },
+                                    )
+                                  ],
+                                );
+                              });
+                        }
+                      },
                       color: Colors.greenAccent,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -121,7 +177,7 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  Widget makeInput({label, obscureText = false}) {
+  Widget makeInput({controller , label, obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -134,6 +190,7 @@ class SignupPage extends StatelessWidget {
           height: 5,
         ),
         TextField(
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),

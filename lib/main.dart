@@ -3,25 +3,43 @@ import 'package:wheel_app/Login.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:wheel_app/Signup_page.dart';
 import 'package:wheel_app/wheel-page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(
-        title: '',
-      ),
-    ),
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(MyApp());
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'login',
+      routes: {
+        "homepage": (context) => const MyHomePage(),
+        "login": (context)    => const LoginPage(),
+        "register": (context) => const SignupPage(),
+      },
+    );
+  }
+}
+
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //
+
     return Scaffold(
+
       body: SafeArea(
         child: Container(
           width: double.infinity,
