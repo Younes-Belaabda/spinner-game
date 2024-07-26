@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
@@ -11,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wheel_app/withdraw.dart';
 import 'package:wheel_app/invite.dart';
 import 'package:share/share.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,8 +20,15 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
+int getd(){
+  return 5;
+}
+
 class _HomepageState extends State<Homepage> {
   StreamController<int> controller = StreamController<int>();
+  int _spin_count = getd();
+  int _uc_count = getd();
+  int _uc = getd();
 
   List<FortuneItem> items = [
     const FortuneItem(child: Text('1')),
@@ -37,6 +45,12 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+
+
+
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -48,7 +62,7 @@ class _HomepageState extends State<Homepage> {
           height: 40,
           width: 40,
           alignment: Alignment.center,
-          child: Text('0'),
+          child: Text('${_spin_count}'),
         ),
       ),
       body: Container(
@@ -62,7 +76,6 @@ class _HomepageState extends State<Homepage> {
             // Padding(padding: EdgeInsets.all(30) , child:
             //   Text('Hi'),),
 
-
             const SizedBox(
               height: 150,
             ),
@@ -71,7 +84,7 @@ class _HomepageState extends State<Homepage> {
               height: 80,
               width: 240,
               alignment: Alignment.center,
-              child: Text('0' ' UC'),
+              child: Text('${_uc_count}' ' UC'),
             ),
             Center(
               child: Padding(
@@ -90,13 +103,16 @@ class _HomepageState extends State<Homepage> {
                         print("On Start");
                       },
                       onAnimationEnd: () {
-                        print("On Animation End");
+                        setState(() {
+                          _uc_count += _uc;
+                        });
+                        setState(() {
+                        _spin_count--;
+                        });
                       },
-                      onFling: () {
-
-                      },
+                      onFling: () {},
                       onFocusItemChanged: (e) {
-
+                        print(e);
                       },
                     ),
                   ),
@@ -110,10 +126,13 @@ class _HomepageState extends State<Homepage> {
               minWidth: 200,
               height: 60,
               onPressed: () {
-                if(true){
+                if (false) {
                   controller.add([1][new Random().nextInt([1].length)]);
-                }else{
-                  controller.add(Random().nextInt(items.length));
+                } else {
+                  _uc = Random().nextInt(items.length);
+                  controller.add(_uc);
+                  //save uc
+                  //save spin
                 }
               },
               color: const Color.fromARGB(166, 255, 235, 59),
@@ -238,13 +257,15 @@ class _HomepageState extends State<Homepage> {
                 title: const Text('تسجيل الخروج'),
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushReplacementNamed('login');
+                  Navigator.of(context).popAndPushNamed('login');
+                  // Navigator.of(context).pushReplacementNamed('login');
                 }),
           ],
         ),
       ),
     );
   }
+
 
   void sendWhatsApp() {
     String url = "https://wa.me/212631872384";

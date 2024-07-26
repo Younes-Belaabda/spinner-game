@@ -85,6 +85,8 @@ flutter:
     - assets/bg-login.png
     - assets/roulette.png
     - assets/roulette-inside.png
+    - assets/auth/login-bg.jpg
+    - assets/google-auth.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
